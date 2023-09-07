@@ -1,0 +1,22 @@
+{
+  "name": "contentfulGen",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@discoveryjs/json-ext": "^0.5.7",
+    "chalk": "^5.3.0",
+    "commander": "^11.0.0",
+    "dotenv": "^16.3.1",
+    "fs-extra": "^11.1.1",
+    "inquirer": "^9.2.10",
+    "joi": "^17.10.0",
+    "listr": "^0.14.3"
+  }
+}

@@ -16,11 +16,7 @@ module.exports = {
       },
       {
         protocol: 'https',
-        hostname: 'demo.saleor.io',
-      },
-      {
-        protocol: 'https',
-        hostname: 'prod.demo.saleor.cloud',
+        hostname: 'prettygreen.eu.saleor.cloud',
       },
     ],
   },

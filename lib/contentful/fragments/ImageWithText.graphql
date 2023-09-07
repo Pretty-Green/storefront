@@ -1,0 +1,33 @@
+fragment DefaultImageWithText on ImageWithText {
+  internalName
+  imagePosition
+  content {
+    externalName
+    internalName
+    shortText
+    richText {
+      json
+    }
+    contentCollection(limit: 2) {
+      items {
+        __typename
+        ... on Media {
+          altText
+          internalName
+          mediaDesktop {
+            ...AdvanceImageFormat
+          }
+          link {
+            url
+          }
+        }
+        ... on Button {
+          externalName
+          link {
+            url
+          }
+        }
+      }
+    }
+  }
+}

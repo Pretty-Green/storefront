@@ -13,7 +13,6 @@ import CloseCart from './close-cart';
 import DeleteItemButton from './delete-item-button';
 import EditItemQuantityButton from './edit-item-quantity-button';
 import OpenCart from './open-cart';
-
 type MerchandiseSearchParams = {
   [key: string]: string;
 };
@@ -66,7 +65,7 @@ export default function CartModal({ cart }: { cart: Cart | null | undefined }) {
           >
             <Dialog.Panel className="fixed bottom-0 right-0 top-0 flex h-full w-full flex-col border-l border-neutral-200 bg-white/80 p-6 text-black backdrop-blur-xl dark:border-neutral-700 dark:bg-black/80 dark:text-white md:w-[390px]">
               <div className="flex items-center justify-between">
-                <p className="text-lg font-semibold">My Cart</p>
+                <p className="font-semibold text-lg">My Cart</p>
 
                 <button aria-label="Close cart" onClick={closeCart}>
                   <CloseCart />
@@ -76,7 +75,7 @@ export default function CartModal({ cart }: { cart: Cart | null | undefined }) {
               {!cart || cart.lines.length === 0 ? (
                 <div className="mt-20 flex w-full flex-col items-center justify-center overflow-hidden">
                   <ShoppingCartIcon className="h-16" />
-                  <p className="mt-6 text-center text-2xl font-bold">Your cart is empty.</p>
+                  <p className="font-bold mt-6 text-center text-2xl">Your cart is empty.</p>
                 </div>
               ) : (
                 <div className="flex h-full flex-col justify-between overflow-hidden p-1">
@@ -176,7 +175,7 @@ export default function CartModal({ cart }: { cart: Cart | null | undefined }) {
                   </div>
                   <a
                     href={cart.checkoutUrl}
-                    className="block w-full rounded-full bg-blue-600 p-3 text-center text-sm font-medium text-white opacity-90 hover:opacity-100"
+                    className="font-medium block w-full rounded-full bg-blue-600 p-3 text-center text-sm text-white opacity-90 hover:opacity-100"
                   >
                     Proceed to Checkout
                   </a>

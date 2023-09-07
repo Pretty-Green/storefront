@@ -1,8 +1,5 @@
-import { ReadonlyURLSearchParams } from 'next/navigation';
-
-export const createUrl = (pathname: string, params: URLSearchParams | ReadonlyURLSearchParams) => {
-  const paramsString = params.toString();
-  const queryString = `${paramsString.length ? '?' : ''}${paramsString}`;
-
-  return `${pathname}${queryString}`;
-};
+export function invariant<T>(val: T | null | undefined, message: string): asserts val is T {
+  if (val === undefined || val === null) {
+    throw new Error(message);
+  }
+}

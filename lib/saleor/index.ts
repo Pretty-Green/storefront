@@ -2,6 +2,7 @@ import { TAGS } from 'lib/constants';
 import { Cart, Collection, Menu, Page, Product } from 'lib/types';
 import { revalidateTag } from 'next/cache';
 import { NextRequest, NextResponse } from 'next/server';
+import { invariant } from '../utils';
 import {
   CheckoutAddLineDocument,
   CheckoutDeleteLineDocument,
@@ -25,7 +26,6 @@ import {
 } from './generated/graphql';
 import { verifySignature } from './jwks';
 import { saleorCheckoutToVercelCart, saleorProductToVercelProduct } from './mappers';
-import { invariant } from './utils';
 
 const endpoint = process.env.SALEOR_INSTANCE_URL;
 invariant(endpoint, `Missing SALEOR_INSTANCE_URL!`);

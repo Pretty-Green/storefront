@@ -1,0 +1,38 @@
+fragment FullWidthImage on FullWidthImage {
+  internalName
+  textColour {
+    colourHex
+  }
+  content {
+    externalName
+    internalName
+    shortText
+    contentCollection {
+      items {
+        ... on Media {
+          __typename
+          internalName
+          mediaDesktop {
+            ...ExtendedImageFormat
+            contentType
+          }
+          mediaMobile {
+            ...ExtendedImageFormat
+            contentType
+          }
+          altText
+          link {
+            url
+          }
+        }
+        ... on Button {
+          __typename
+          externalName
+          link {
+            url
+          }
+        }
+      }
+    }
+  }
+}

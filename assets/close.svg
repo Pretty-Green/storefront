@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+  <defs>
+    <style>
+      .a {
+        fill-rule: evenodd;
+      }
+    </style>
+  </defs>
+  <g transform="translate(-38.243 -94)">
+    <path class="a"
+      d="M54,54.737,61.285,62,54,69.285l.737.715L62,62.737,69.285,70,70,69.285,62.737,62,70,54.737,69.285,54,62,61.285,54.737,54Z"
+      transform="translate(-15.757 40)"></path>
+  </g>
+</svg>

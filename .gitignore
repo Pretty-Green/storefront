@@ -36,3 +36,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# other apps
+/lib/contentfulGen/node_modules
+/lib/contentfulPopulate/node_modules

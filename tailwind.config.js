@@ -1,54 +1,83 @@
-const plugin = require('tailwindcss/plugin');
-
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./app/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
+  darkMode: ['class'],
+  content: [
+    './pages/**/*.{ts,tsx}',
+    './components/**/*.{ts,tsx}',
+    './app/**/*.{ts,tsx}',
+    './src/**/*.{ts,tsx}',
+    './@/**/*.{ts,tsx}',
+  ],
   theme: {
+    fontFamily: {
+      sans: ['acumin-pro', 'sans-serif'],
+    },
+    fontWeight: {
+      normal: '300',
+    },
+    container: {
+      center: true,
+      padding: '2rem',
+      screens: {
+        '2xl': '1400px',
+      },
+    },
     extend: {
-      fontFamily: {
-        sans: ['var(--font-inter)'],
+      colors: {
+        border: 'var(--border)',
+        input: 'var(--input)',
+        ring: 'var(--ring)',
+        background: 'var(--background)',
+        foreground: 'var(--foreground)',
+        primary: {
+          DEFAULT: 'var(--primary)',
+          foreground: 'var(--primary-foreground)',
+        },
+        secondary: {
+          DEFAULT: 'var(--secondary)',
+          foreground: 'var(--secondary-foreground)',
+        },
+        destructive: {
+          DEFAULT: 'var(--destructive)',
+          foreground: 'var(--destructive-foreground)',
+        },
+        muted: {
+          DEFAULT: 'var(--muted)',
+          foreground: 'var(--muted-foreground)',
+        },
+        accent: {
+          DEFAULT: 'var(--accent)',
+          foreground: 'var(--accent-foreground)',
+        },
+        popover: {
+          DEFAULT: 'var(--popover)',
+          foreground: 'var(--popover-foreground)',
+        },
+        card: {
+          DEFAULT: 'var(--card)',
+          foreground: 'var(--card-foreground)',
+        },
+      },
+      borderRadius: {
+        lg: 'var(--radius)',
+        md: 'calc(var(--radius) - 2px)',
+        sm: 'calc(var(--radius) - 4px)',
       },
       keyframes: {
-        fadeIn: {
-          from: { opacity: 0 },
-          to: { opacity: 1 },
+        'accordion-down': {
+          from: { height: 0 },
+          to: { height: 'var(--radix-accordion-content-height)' },
         },
-        marquee: {
-          '0%': { transform: 'translateX(0%)' },
-          '100%': { transform: 'translateX(-100%)' },
-        },
-        blink: {
-          '0%': { opacity: 0.2 },
-          '20%': { opacity: 1 },
-          '100% ': { opacity: 0.2 },
+        'accordion-up': {
+          from: { height: 'var(--radix-accordion-content-height)' },
+          to: { height: 0 },
         },
       },
       animation: {
-        fadeIn: 'fadeIn .3s ease-in-out',
-        carousel: 'marquee 60s linear infinite',
-        blink: 'blink 1.4s both infinite',
+        'accordion-down': 'accordion-down 0.2s ease-out',
+        'accordion-up': 'accordion-up 0.2s ease-out',
       },
     },
   },
-  future: {
-    hoverOnlyWhenSupported: true,
-  },
-  plugins: [
-    require('@tailwindcss/container-queries'),
-    require('@tailwindcss/typography'),
-    plugin(({ matchUtilities, theme }) => {
-      matchUtilities(
-        {
-          'animation-delay': (value) => {
-            return {
-              'animation-delay': value,
-            };
-          },
-        },
-        {
-          values: theme('transitionDelay'),
-        },
-      );
-    }),
-  ],
+  plugins: [require('tailwindcss-animate')],
 };

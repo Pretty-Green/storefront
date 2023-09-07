@@ -1,0 +1,26 @@
+query GetHome {
+  pageCollection(where: { internalName: "Home Page" }, limit: 1) {
+    items {
+      internalName
+      metaTitle
+      metaDescription
+      contentCollection(limit: 15) {
+        items {
+          __typename
+          ... on FullWidthImage {
+            ...DefaultFullWidthImage
+          }
+          ... on ImageWithText {
+            ...DefaultImageWithText
+          }
+          ... on MultiColumnContent {
+            ...DefaultMultiColumnContent
+          }
+          ... on Carousel {
+            externalName
+          }
+        }
+      }
+    }
+  }
+}

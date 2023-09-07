@@ -2,7 +2,7 @@
  * @type {import('eslint').Linter.Config}
  */
 module.exports = {
-  extends: ['next', 'prettier'],
+  extends: ['next', 'prettier', 'plugin:storybook/recommended', 'plugin:wc/recommended'],
   plugins: ['unicorn'],
   rules: {
     'no-unused-vars': [
@@ -16,12 +16,6 @@ module.exports = {
     ],
     'prefer-const': 'error',
     'react-hooks/exhaustive-deps': 'error',
-    'unicorn/filename-case': [
-      'error',
-      {
-        case: 'kebabCase',
-      },
-    ],
   },
   ignorePatterns: ['lib/saleor/generated'],
 };

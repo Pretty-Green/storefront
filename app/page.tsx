@@ -15,6 +15,7 @@ export const metadata = {
 export default async function HomePage() {
   return (
     <>
+      Homepage
       <ThreeItemGrid />
       <Suspense>
         <Carousel />

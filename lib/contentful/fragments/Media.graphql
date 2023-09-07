@@ -1,0 +1,8 @@
+fragment Media on Media {
+  externalName
+  internalName
+  link {
+    ...Link
+  }
+  altText
+}

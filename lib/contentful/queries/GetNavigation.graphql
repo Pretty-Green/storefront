@@ -1,0 +1,15 @@
+query GetHeader {
+  headerCollection(limit: 1) {
+    items {
+      sys {
+        id
+      }
+      externalName
+      desktopNavigation
+      meobileNavigation
+      logo {
+        url
+      }
+    }
+  }
+}

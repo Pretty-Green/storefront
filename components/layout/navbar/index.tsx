@@ -1,34 +1,21 @@
 import Cart from 'components/cart';
 import OpenCart from 'components/cart/open-cart';
-import LogoSquare from 'components/logo-square';
-import { getMenu } from 'lib/saleor';
-import { Menu } from 'lib/types';
+import { getNavigation } from 'lib/contentful';
+import Image from 'next/image';
 import Link from 'next/link';
 import { Suspense } from 'react';
+import pgIcon from '../../../assets/logo.svg';
 import MobileMenu from './mobile-menu';
 import Search from './search';
-const { SITE_NAME } = process.env;
-
 export default async function Navbar() {
-  const menu = await getMenu('next-js-frontend-header-menu');
-
+  const menu = await getNavigation();
   return (
-    <nav className="relative flex items-center justify-between p-4 lg:px-6">
-      <div className="block flex-none md:hidden">
-        <MobileMenu menu={menu} />
-      </div>
-      <div className="flex w-full items-center">
-        <div className="flex w-full md:w-5/12">
-          <Link
-            href="/"
-            aria-label="Go back home"
-            className="mr-2 flex w-full items-center justify-center md:w-auto lg:mr-6"
-          >
-            <LogoSquare />
-            <div className="ml-2 flex-none text-sm font-medium uppercase md:hidden lg:block">
-              {SITE_NAME}
-            </div>
-          </Link>
+    <nav className="fixed z-10 flex h-16 w-full items-center bg-white p-4 lg:px-6" id="navi">
+      <div className="flex w-full items-center justify-around">
+        <div className="w-2/12">
+          <MobileMenu menu={menu} />
+        </div>
+        {/* <div className="md:flex w-full hidden lg:w-5/12">
           {menu.length ? (
             <ul className="hidden gap-6 text-sm md:flex md:items-center">
               {menu.map((item: Menu) => (
@@ -43,11 +30,19 @@ export default async function Navbar() {
               ))}
             </ul>
           ) : null}
+
+        </div> */}
+        <div className="w-8/12">
+          <Link
+            href="/"
+            aria-label="Go back home"
+            className="mr-2 flex w-full items-center justify-center md:w-auto lg:mr-6"
+          >
+            <Image alt="logo" src={pgIcon} width={52} height={52} />
+          </Link>
         </div>
-        <div className="hidden justify-center md:flex md:w-3/12">
+        <div className="flex w-2/12 justify-end space-x-5">
           <Search />
-        </div>
-        <div className="flex justify-end md:w-4/12">
           <Suspense fallback={<OpenCart />}>
             <Cart />
           </Suspense>

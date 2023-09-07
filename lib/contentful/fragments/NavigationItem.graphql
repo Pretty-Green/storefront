@@ -1,0 +1,23 @@
+fragment NavigationItem on NavigationItem {
+  externalName
+  internalName
+  mainLink {
+    ...Link
+  }
+  navigationLinksCollection(limit: 9) {
+    total
+    items {
+      ...Link
+    }
+  }
+  mediaCollection(limit: 9) {
+    total
+    items {
+      ...Media
+    }
+  }
+  colour {
+    internalName
+    colourHex
+  }
+}

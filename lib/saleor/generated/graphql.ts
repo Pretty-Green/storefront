@@ -27353,10 +27353,7 @@ export class TypedDocumentString<TResult, TVariables>
 {
   __apiType?: DocumentTypeDecoration<TResult, TVariables>['__apiType'];
 
-  constructor(
-    private value: string,
-    public __meta__?: { hash: string },
-  ) {
+  constructor(private value: string, public __meta__?: { hash: string }) {
     super(value);
   }
 
