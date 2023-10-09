@@ -1,0 +1,33 @@
+query GetPageBySlug($path: String!) {
+  pageCollection(where: { url: { value: $path } }, limit: 1) {
+    items {
+      externalName
+      metadata {
+        ...Metadata
+      }
+      url {
+        ...Url
+      }
+      hero {
+        ...FullWidthImage
+      }
+      contentCollection(limit: 10) {
+        items {
+          __typename
+          ... on Carousel {
+            ...Carousel
+          }
+          ... on FullWidthImage {
+            ...FullWidthImage
+          }
+          ... on ImageWithText {
+            ...ImageWithText
+          }
+          ... on MultiColumnContent {
+            ...MultiColumnContent
+          }
+        }
+      }
+    }
+  }
+}

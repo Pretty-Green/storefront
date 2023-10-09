@@ -1,0 +1,90 @@
+query GetHeader {
+  header(id: "2bgw5whF1epZAKJoOUmMOU") {
+    externalName
+    logo {
+      externalName
+      mediaDesktop {
+        url
+      }
+      mediaMobile {
+        url
+      }
+    }
+    desktopNavigation {
+      externalName
+      navigationItemsCollection(limit: 10) {
+        items {
+          externalName
+          mainLink {
+            ...Link
+          }
+          colour {
+            ...Colour
+          }
+          contentCollection {
+            items {
+              __typename
+              ... on Link {
+                ...Link
+              }
+              ... on Media {
+                altText
+                externalName
+                mediaDesktop {
+                  url(transform: { width: 720 })
+                }
+                mediaMobile {
+                  url(transform: { width: 320 })
+                }
+              }
+              ... on NavigationItem {
+                externalName
+                mainLink {
+                  ...Link
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    mobileNavigation {
+      externalName
+      navigationItemsCollection(limit: 10) {
+        items {
+          externalName
+          mainLink {
+            ...Link
+          }
+          colour {
+            ...Colour
+          }
+          contentCollection {
+            items {
+              __typename
+              ... on Link {
+                ...Link
+              }
+              ... on Media {
+                altText
+                externalName
+                mediaDesktop {
+                  url
+                }
+                mediaMobile {
+                  url
+                }
+              }
+              ... on NavigationItem {
+                externalName
+                mainLink {
+                  ...Link
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -18,14 +18,13 @@ const config: CodegenConfig = {
       config: {
         useTypeImports: true,
         defaultScalarType: 'unknown',
-        skipTypename: true,
         documentMode: 'string',
         exportFragmentSpreadSubTypes: true,
         dedupeFragments: true,
         scalars: {
           Date: 'string',
           DateTime: 'string',
-          Decimal: 'number',
+          bDecimal: 'numer',
           JSONString: 'string',
           Metadata: 'Record<string, string>',
           PositiveDecimal: 'number',
@@ -51,6 +50,7 @@ const config: CodegenConfig = {
         dedupeFragments: true,
       },
       config: {
+        avoidOptionals: true,
         useTypeImports: true,
         defaultScalarType: 'unknown',
         skipTypename: true,

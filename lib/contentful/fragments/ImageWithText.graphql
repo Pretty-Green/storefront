@@ -1,33 +1,16 @@
-fragment DefaultImageWithText on ImageWithText {
-  internalName
-  imagePosition
-  content {
-    externalName
-    internalName
-    shortText
-    richText {
+fragment ImageWithText on ImageWithText {
+  externalName
+  text {
+    longText {
       json
     }
-    contentCollection(limit: 2) {
-      items {
-        __typename
-        ... on Media {
-          altText
-          internalName
-          mediaDesktop {
-            ...AdvanceImageFormat
-          }
-          link {
-            url
-          }
-        }
-        ... on Button {
-          externalName
-          link {
-            url
-          }
-        }
-      }
+  }
+  media {
+    mediaDesktop {
+      url(transform: { width: 1440 })
+    }
+    mediaMobile {
+      url(transform: { width: 720 })
     }
   }
 }

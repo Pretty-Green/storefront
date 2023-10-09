@@ -1,38 +1,23 @@
 fragment FullWidthImage on FullWidthImage {
-  internalName
+  externalName
   textColour {
-    colourHex
+    value
   }
-  content {
+  button {
     externalName
-    internalName
-    shortText
-    contentCollection {
-      items {
-        ... on Media {
-          __typename
-          internalName
-          mediaDesktop {
-            ...ExtendedImageFormat
-            contentType
-          }
-          mediaMobile {
-            ...ExtendedImageFormat
-            contentType
-          }
-          altText
-          link {
-            url
-          }
-        }
-        ... on Button {
-          __typename
-          externalName
-          link {
-            url
-          }
-        }
+    link {
+      url {
+        ...Url
       }
+    }
+  }
+  media {
+    externalName
+    mediaDesktop {
+      url(transform: { width: 1920 })
+    }
+    mediaMobile {
+      url(transform: { width: 720 })
     }
   }
 }

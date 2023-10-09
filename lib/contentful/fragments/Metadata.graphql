@@ -1,0 +1,7 @@
+fragment Metadata on Metadata {
+  internalName
+  externalName
+  title
+  description
+  keywords
+}

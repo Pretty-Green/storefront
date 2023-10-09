@@ -1,0 +1,4 @@
+fragment Colour on Color {
+  externalName
+  value
+}

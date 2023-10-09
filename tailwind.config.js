@@ -11,6 +11,7 @@ module.exports = {
   theme: {
     fontFamily: {
       sans: ['acumin-pro', 'sans-serif'],
+      secondary: ['nimbus-roman', 'serif'],
     },
     fontWeight: {
       normal: '300',
@@ -24,6 +25,8 @@ module.exports = {
     },
     extend: {
       colors: {
+        prose: 'var(--prose)',
+        separator: 'var(--separator)',
         border: 'var(--border)',
         input: 'var(--input)',
         ring: 'var(--ring)',
@@ -79,5 +82,5 @@ module.exports = {
       },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [require('tailwindcss-animate'), require('daisyui')],
 };

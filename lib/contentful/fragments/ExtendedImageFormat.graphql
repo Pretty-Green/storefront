@@ -1,4 +1,0 @@
-fragment ExtendedImageFormat on Asset {
-  urlWebp(transform: { quality: 85, format: WEBP })
-  urlJpg: url(transform: { quality: 85, format: JPG })
-}

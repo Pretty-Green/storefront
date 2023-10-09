@@ -1,8 +1,10 @@
-import Navbar from 'components/layout/navbar';
 import { Inter } from 'next/font/google';
-import { ReactNode, Suspense } from 'react';
-import { register } from 'swiper/element/bundle';
+import { ReactNode } from 'react';
+
+import Footer from 'components/layout/footer';
+import Navbar from 'components/layout/navbar';
 import './globals.css';
+
 const { TWITTER_CREATOR, TWITTER_SITE, SITE_NAME } = process.env;
 const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL
   ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
@@ -33,16 +35,13 @@ const inter = Inter({
   display: 'swap',
   variable: '--font-inter',
 });
-
 export default async function RootLayout({ children }: { children: ReactNode }) {
-  register();
   return (
     <html lang="en" className={inter.variable}>
       <body className="bg-neutral-50 text-black selection:bg-teal-300 dark:bg-neutral-900 dark:text-white dark:selection:bg-pink-500 dark:selection:text-white">
         <Navbar />
-        <Suspense>
-          <main>{children}</main>
-        </Suspense>
+        <main>{children}</main>
+        <Footer />
       </body>
     </html>
   );

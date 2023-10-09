@@ -6,11 +6,14 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { GetNavigationQuery } from 'lib/contentful/generated/graphql';
+// import { GetNavigationQuery } from 'lib/contentful/generated/graphql';
 import Image from 'next/image';
 import menuIcon from '../../../assets/menu.svg';
+// interface GetNavigationQuery {
+//   test: string
+// }
 
-export default function MobileMenu({ menu }: { menu: GetNavigationQuery }) {
+export default function MobileMenu({ menu }: { menu: any }) {
   return (
     <Sheet>
       <SheetTrigger asChild>

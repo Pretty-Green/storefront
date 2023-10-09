@@ -1,0 +1,9 @@
+fragment Carousel on Carousel {
+  externalName
+  collectionsCollection {
+    items {
+      externalName
+      collection
+    }
+  }
+}

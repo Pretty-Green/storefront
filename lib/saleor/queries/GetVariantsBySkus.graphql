@@ -1,0 +1,33 @@
+query GetVariantsBySkus($skus: [String!]) {
+  productVariants(first: 10, channel: "default-channel", filter: { sku: $skus }) {
+    edges {
+      node {
+        id
+        sku
+        pricing {
+          price {
+            net {
+              currency
+              amount
+            }
+          }
+          discount {
+            net {
+              currency
+              amount
+            }
+          }
+          priceUndiscounted {
+            net {
+              currency
+              amount
+            }
+          }
+        }
+        media {
+          url(size: 512)
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,21 @@
+fragment MultiColumnContent on MultiColumnContent {
+  externalName
+  contentCollection {
+    items {
+      externalName
+      text {
+        longText {
+          json
+        }
+      }
+      media {
+        mediaDesktop {
+          url(transform: { width: 1440 })
+        }
+        mediaMobile {
+          url(transform: { width: 720 })
+        }
+      }
+    }
+  }
+}

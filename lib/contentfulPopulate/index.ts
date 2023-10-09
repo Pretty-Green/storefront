@@ -1,125 +1,167 @@
 import contentful, { EntryProps } from 'contentful-management';
+import fs from 'fs';
 
 const client = contentful.createClient({
-  accessToken: process.env.CONTENTFUL_ACCESS_TOKEN || '',
+  accessToken: 'CFPAT-0jxcuEx0RFwaxuXsZTiIfvxeoAoD5bRbcuVi6aLMOJY',
 });
 
 const DEFAULT_LOCALE = 'en-US';
 
-const generateContent = () => {};
+const generateContent = async (
+  item: contentful.ContentFields<contentful.KeyValueMap>,
+  environment: contentful.Environment,
+  contentType: string,
+) => {
+  switch (item.type) {
+    case 'Symbol':
+      return `${contentType} - (${item.type} ${item.id})`;
+    case 'Text':
+      return `${contentType} -  (${item.type} ${item.id})`;
+    case 'RichText':
+      return [
+        {
+          nodeType: 'paragraph', // Can be paragraphs, images, lists, embedded entries
+          data: {},
+          content: [
+            {
+              nodeType: 'text',
+              value: `${contentType} - (${item.type} ${item.id})`,
+              data: {},
+              marks: [],
+            },
+          ],
+        },
+      ];
+    case 'Integer':
+      return Math.floor(Math.random() * 10);
+    case 'Number':
+      return Math.random();
+    case 'Date':
+      return new Date();
+    case 'Location':
+      return { lat: 51.5125839, lon: -0.2190781 };
+    case 'Boolean':
+      return true;
+    case 'Link':
+      {
+        const isAsset = item.linkType === 'Asset';
 
-// ENTRY EXAMPLE
-// {
-//   metadata: { tags: [] },
-//   sys: {
-//     space: { sys: { type: 'Link', linkType: 'Space', id: 'tsre65mxrq21' } },
-//     id: '3mwQ9PrdCBy9O1FPxpkGqD',
-//     type: 'Entry',
-//     createdAt: '2023-09-05T14:29:02.640Z',
-//     updatedAt: '2023-09-05T14:29:13.742Z',
-//     environment: { sys: { id: 'master', type: 'Link', linkType: 'Environment' } },
-//     publishedVersion: 2,
-//     publishedAt: '2023-09-05T14:29:13.742Z',
-//     firstPublishedAt: '2023-09-05T14:29:13.742Z',
-//     createdBy: {
-//       sys: { type: 'Link', linkType: 'User', id: '24FYtS1aSLleKvTSI8ugOJ' }
-//     },
-//     updatedBy: {
-//       sys: { type: 'Link', linkType: 'User', id: '24FYtS1aSLleKvTSI8ugOJ' }
-//     },
-//     publishedCounter: 1,
-//     version: 3,
-//     publishedBy: {
-//       sys: { type: 'Link', linkType: 'User', id: '24FYtS1aSLleKvTSI8ugOJ' }
-//     },
-//     automationTags: [],
-//     contentType: {
-//       sys: { type: 'Link', linkType: 'ContentType', id: 'navigation' }
-//     }
-//   },
-//   fields: {
-//     internalName: { 'en-US': 'test1' },
-//     externalName: { 'en-US': 'test1' },
-//     navigationItems: {
-//       'en-US': [
-//         {
-//           sys: {
-//             type: 'Link',
-//             linkType: 'Entry',
-//             id: '4Bn07DVW7piGOLwm94TBn0'
-//           }
-//         }
-//       ]
-//     }
-//   }
-// }
+        const typeId = item.validations?.[0]?.linkContentType?.[0];
+        console.log('Link', item);
+        if (typeId) {
+          const contentModel = await environment.getContentType(typeId);
+          const contentModelFields = contentModel.fields;
+          const randomFieldData = {} as EntryProps['fields'];
+
+          for (const contentModelField of contentModelFields) {
+            const contentTypeRelations = `${contentType}  ${typeId}`;
+            const value = await generateContent(
+              contentModelField,
+              environment,
+              contentTypeRelations,
+            );
+            randomFieldData[contentModelField.id] = {
+              [DEFAULT_LOCALE]: value,
+            };
+          }
+
+          const newEntry = await environment.createEntry(typeId, { fields: randomFieldData });
+
+          return {
+            sys: {
+              type: 'Link',
+              linkType: 'Entry',
+              id: newEntry.sys.id,
+            },
+          };
+        }
+        if (isAsset) {
+          const data = {
+            fields: {
+              title: {
+                [DEFAULT_LOCALE]: `${contentType} - (${item.type} ${item.id})`,
+              },
+              description: {
+                [DEFAULT_LOCALE]: 'this is a test tile',
+              },
+              file: {
+                [DEFAULT_LOCALE]: {
+                  contentType: 'image/png',
+                  fileName: `${contentType}-(${item.type}-${item.id}).png`,
+                  file: fs.createReadStream(
+                    '/Users/lukasz/Documents/GitHub/storefront/lib/contentfulPopulate/test.png',
+                  ),
+                },
+              },
+            },
+          };
+          const asset = await environment.createAssetFromFiles(data);
+          return {
+            sys: {
+              type: 'Link',
+              linkType: 'Asset',
+              id: asset.sys.id,
+            },
+          };
+        }
+      }
+      break;
+    case 'Array':
+      {
+        const typeId = item.items?.validations?.[0]?.linkContentType?.[0];
+        console.log('Array', typeId);
+        if (typeId) {
+          const contentModel = await environment.getContentType(typeId);
+          const contentModelFields = contentModel.fields;
+
+          const randomFieldData = {} as EntryProps['fields'];
+
+          for (const contentModelField of contentModelFields) {
+            const value = await generateContent(contentModelField, environment, contentType);
+            randomFieldData[contentModelField.id] = {
+              [DEFAULT_LOCALE]: value,
+            };
+          }
+          const newEntry = await environment.createEntry(typeId, { fields: randomFieldData });
+
+          return [
+            {
+              sys: {
+                type: 'Link',
+                linkType: 'Entry',
+                id: newEntry.sys.id,
+              },
+            },
+          ];
+        }
+      }
+      break;
+    case 'Object':
+      return { name: 'John', age: 30, car: null };
+    default:
+      return '';
+  }
+};
 
 // This API call will request a space with the specified ID
 client.getSpace('tsre65mxrq21').then((space) => {
   space.getEnvironment('master').then((environment) => {
-    // LOG ENTRIES
-    // environment.getEntries().then((entries) => entries.items.map((entry) => {
-    //   console.log(util.inspect(entry, { showHidden: false, depth: null, colors: true }))
-    // }))
-
-    environment.getContentTypes().then((contentTypes) => {
-      if (contentTypes.items[0]?.fields) {
-        const contentModelFields = contentTypes.items[0]?.fields;
-
+    environment.getContentTypes().then(async (contentTypes) => {
+      // tutaj loop po contentTypes zamiast contentTypes.items[0]\
+      for (const contentType of contentTypes.items) {
+        const contentModelFields = contentType.fields;
+        const contentTypeId = contentType.sys.id;
         const randomFieldData = {} as EntryProps['fields'];
-        contentModelFields.forEach((item) => {
-          let value: any;
 
-          switch (item.type) {
-            case 'Symbol':
-              value = `test (${item.type} ${item.id})`;
-              break;
-            case 'Text':
-              value = `test (${item.type} ${item.id})`;
-              break;
-            case 'RichText':
-              value = `test (${item.type} ${item.id})`;
-              break;
-            case 'Integer':
-              value = Math.floor(Math.random() * 10);
-              break;
-            case 'Number':
-              value = Math.random();
-              break;
-            case 'Date':
-              value = new Date();
-              break;
-            case 'Location':
-              value = { lat: 51.5125839, lon: -0.2190781 };
-              break;
-            case 'Boolean':
-              value = true;
-              break;
-            case 'Link':
-              const typeId = item.validations?.[0]?.linkContentType?.[0];
-              if (typeId) {
-                environment.getContentType(typeId).then((contentType) => {
-                  console.log(contentType);
-                });
-              }
-
-              // environment.createEntry(item.type, {
-
-              // })
-              break;
-            case 'Array':
-              break;
-            case 'Object':
-              value = '{"name":"John", "age":30, "car":null}';
-              break;
-            default:
-              throw new Error(`unsupported model type: ${item.type}`);
-          }
-
-          randomFieldData[item.id] = {
+        //gist.github.com/joeytwiddle/37d2085425c049629b80956d3c618971
+        https: for (const contentModelField of contentModelFields) {
+          const value = await generateContent(contentModelField, environment, contentTypeId);
+          randomFieldData[contentModelField.id] = {
             [DEFAULT_LOCALE]: value,
           };
-        });
+        }
+
+        await environment.createEntry(contentTypeId, { fields: randomFieldData });
       }
     });
   });

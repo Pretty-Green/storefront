@@ -1,0 +1,4 @@
+fragment Url on Url {
+  externalName
+  value
+}

@@ -15,6 +15,9 @@ Navigation
   body {
     @apply bg-background text-foreground;
   }
+  p {
+    @apply text-prose;
+  }
   h1 {
     @apply text-3xl font-normal tracking-widest;
   }
@@ -38,7 +41,10 @@ Navigation
   }
 
   :root {
-    --background: hsla(0, 0%, 100%, 100%);
+    --prose: hsl(0 0% 10.2%);
+    --separator: hsl(0 0% 0%);
+
+    --background: hsl(0 0% 94%);
     --foreground: hsl(224 71.4% 4.1%);
 
     --card: hsl(0 0% 100%);
@@ -62,7 +68,6 @@ Navigation
     --destructive: hsl(0 84.2% 60.2%);
     --destructive-foreground: hsl(210 20% 98%);
 
-    --border: hsla(0, 0%, 0%, 0.1);
     --input: hsl(220 13% 91%);
     --ring: hsl(224 71.4% 4.1%);
 
@@ -70,6 +75,9 @@ Navigation
   }
 
   .dark {
+    --prose: hsl(0 0% 10.2%);
+    --separator: hsl(0 0% 10.2%);
+
     --background: hsl(224 71.4% 4.1%);
     --foreground: hsl(210 20% 98%);
 

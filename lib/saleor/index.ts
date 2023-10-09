@@ -18,6 +18,7 @@ import {
   GetPageBySlugDocument,
   GetPagesDocument,
   GetProductBySlugDocument,
+  GetVariantsBySkusDocument,
   MenuItemFragment,
   OrderDirection,
   ProductOrderField,
@@ -143,6 +144,24 @@ export async function getProduct(handle: string): Promise<Product | undefined> {
   return saleorProductToVercelProduct(saleorProduct.product);
 }
 
+export async function GetVariantsBySkus(handle: string[]) {
+  const saleorProductVariants = await saleorFetch({
+    query: GetVariantsBySkusDocument,
+    variables: {
+      skus: handle,
+    },
+    tags: [TAGS.products],
+  });
+
+  const products = saleorProductVariants.productVariants?.edges;
+
+  if (!products || products?.length === 0) {
+    throw new Error(`Variant not found: ${handle}`);
+  }
+
+  return products;
+}
+
 const _getCollection = async (handle: string) =>
   (
     await saleorFetch({
@@ -153,6 +172,7 @@ const _getCollection = async (handle: string) =>
       tags: [TAGS.collections],
     })
   ).collection;
+
 const _getCategory = async (handle: string) =>
   (
     await saleorFetch({

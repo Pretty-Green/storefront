@@ -1,5 +1,8 @@
 fragment Link on Link {
   externalName
-  internalName
-  url
+  openInNewWindow
+  follow
+  url {
+    ...Url
+  }
 }

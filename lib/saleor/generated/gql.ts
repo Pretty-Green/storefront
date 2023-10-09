@@ -50,6 +50,8 @@ const documents = {
     types.GetPagesDocument,
   'query GetProductBySlug($slug: String!) {\n  product(channel: "default-channel", slug: $slug) {\n    ...ProductDetails\n  }\n}':
     types.GetProductBySlugDocument,
+  'query GetVariantsBySkus($skus: [String!]) {\n  productVariants(first: 10, channel: "default-channel", filter: {sku: $skus}) {\n    edges {\n      node {\n        id\n        sku\n        pricing {\n          price {\n            net {\n              currency\n              amount\n            }\n          }\n          discount {\n            net {\n              currency\n              amount\n            }\n          }\n          priceUndiscounted {\n            net {\n              currency\n              amount\n            }\n          }\n        }\n        media {\n          url(size: 512)\n        }\n      }\n    }\n  }\n}':
+    types.GetVariantsBySkusDocument,
   'query SearchProducts($search: String!, $sortBy: ProductOrderField!, $sortDirection: OrderDirection!) {\n  products(\n    first: 100\n    channel: "default-channel"\n    sortBy: {field: $sortBy, direction: $sortDirection}\n    filter: {search: $search}\n  ) {\n    edges {\n      node {\n        id\n        slug\n        name\n        isAvailableForPurchase\n        description\n        seoTitle\n        seoDescription\n        pricing {\n          priceRange {\n            start {\n              gross {\n                currency\n                amount\n              }\n            }\n            stop {\n              gross {\n                currency\n                amount\n              }\n            }\n          }\n        }\n        media {\n          url(size: 2160)\n          type\n          alt\n        }\n        collections {\n          name\n        }\n        updatedAt\n        variants {\n          ...Variant\n        }\n      }\n    }\n  }\n}':
     types.SearchProductsDocument,
   'query GetProducts {\n  products(first: 10, channel: "default-channel") {\n    edges {\n      node {\n        name\n      }\n    }\n  }\n}':
@@ -172,6 +174,12 @@ export function graphql(
 export function graphql(
   source: 'query GetProductBySlug($slug: String!) {\n  product(channel: "default-channel", slug: $slug) {\n    ...ProductDetails\n  }\n}',
 ): typeof import('./graphql').GetProductBySlugDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: 'query GetVariantsBySkus($skus: [String!]) {\n  productVariants(first: 10, channel: "default-channel", filter: {sku: $skus}) {\n    edges {\n      node {\n        id\n        sku\n        pricing {\n          price {\n            net {\n              currency\n              amount\n            }\n          }\n          discount {\n            net {\n              currency\n              amount\n            }\n          }\n          priceUndiscounted {\n            net {\n              currency\n              amount\n            }\n          }\n        }\n        media {\n          url(size: 512)\n        }\n      }\n    }\n  }\n}',
+): typeof import('./graphql').GetVariantsBySkusDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
