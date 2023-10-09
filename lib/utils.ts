@@ -15,7 +15,9 @@ export const createUrl = (pathname: string, params: URLSearchParams | ReadonlyUR
 };
 
 export const getImage = async (src: string) => {
-  const buffer = await fetch(src).then(async (res) => Buffer.from(await res.arrayBuffer()));
+  const buffer = await fetch(src, { cache: 'no-store' }).then(async (res) =>
+    Buffer.from(await res.arrayBuffer()),
+  );
 
   const {
     metadata: { height, width },

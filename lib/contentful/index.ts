@@ -29,7 +29,7 @@ export async function contentfulFetch<Result, Variables>({
 }): Promise<Result> {
   invariant(endpoint, `Missing CONTENTFUL_INSTANCE_URL!`);
 
-  const options = cache ? { cache, next: { tags } } : { next: { revalidate: 900, tags } };
+  const options = cache ? { cache, next: { tags } } : { next: { revalidate: 3600 } };
 
   const result = await fetch(endpoint, {
     method: 'POST',

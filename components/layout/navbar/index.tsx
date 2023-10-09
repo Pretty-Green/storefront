@@ -18,7 +18,9 @@ export default async function Navbar() {
         <div className="hidden w-2/12">{/* <MobileMenu menu={mobileNavigation} /> */}</div>
         <div className="hidden w-full gap-4 md:flex lg:w-5/12">
           {desktopNavigation?.navigationItemsCollection?.items.map((item) => {
-            return <HeaderMenu key={item?.externalName} item={item} />;
+            if (item) {
+              return <HeaderMenu key={item?.externalName} item={item} />;
+            }
           })}
         </div>
         <div className="w-8/12">
@@ -27,7 +29,7 @@ export default async function Navbar() {
             aria-label="Go back home"
             className="mr-2 flex w-full items-center justify-center md:w-auto lg:mr-6"
           >
-            <Image alt="logo" src={logo?.mediaDesktop?.url} width={52} height={52} />
+            <Image alt="logo" src={logo?.mediaDesktop?.url || ''} width={52} height={52} />
           </Link>
         </div>
         <div className="flex w-2/12 justify-end space-x-5">

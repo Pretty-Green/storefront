@@ -1,8 +1,7 @@
-import { Product } from 'lib/types';
 import Image from 'next/image';
 import React from 'react';
 
-const ProductContext = React.createContext<Product | undefined>(undefined);
+const ProductContext = React.createContext(undefined);
 
 const useProductContext = () => {
   const context = React.useContext(ProductContext);
@@ -41,7 +40,7 @@ export function Photo() {
   return <Image src={src} alt="text" />;
 }
 
-function Product({ data, children }: React.PropsWithChildren<{ data: Product }>) {
+function Product({ data, children }: React.PropsWithChildren<{ data: any }>) {
   return <ProductContext.Provider value={data}>{children}</ProductContext.Provider>;
 }
 

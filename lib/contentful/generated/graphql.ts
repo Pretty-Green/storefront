@@ -5803,6 +5803,46 @@ export type MultiColumnContentFragment = {
   } | null;
 };
 
+export type NavigationItemFragment = {
+  externalName: string | null;
+  mainLink: {
+    externalName: string | null;
+    openInNewWindow: boolean | null;
+    follow: boolean | null;
+    url: { externalName: string | null; value: string | null } | null;
+  } | null;
+  contentCollection: {
+    items: Array<
+      | {
+          __typename: 'Link';
+          externalName: string | null;
+          openInNewWindow: boolean | null;
+          follow: boolean | null;
+          url: { externalName: string | null; value: string | null } | null;
+        }
+      | {
+          __typename: 'Media';
+          externalName: string | null;
+          altText: string | null;
+          mediaDesktop: { url: string | null } | null;
+          mediaMobile: { url: string | null } | null;
+        }
+      | {
+          __typename: 'NavigationItem';
+          externalName: string | null;
+          mainLink: {
+            externalName: string | null;
+            openInNewWindow: boolean | null;
+            follow: boolean | null;
+            url: { externalName: string | null; value: string | null } | null;
+          } | null;
+        }
+      | null
+    >;
+  } | null;
+  colour: { externalName: string | null; value: string | null } | null;
+};
+
 export type UrlFragment = { externalName: string | null; value: string | null };
 
 export type GetFooterQueryVariables = Exact<{ [key: string]: never }>;
@@ -6086,15 +6126,6 @@ export const CarouselFragmentDoc = new TypedDocumentString(
     `,
   { fragmentName: 'Carousel' },
 ) as unknown as TypedDocumentString<CarouselFragment, unknown>;
-export const ColourFragmentDoc = new TypedDocumentString(
-  `
-    fragment Colour on Color {
-  externalName
-  value
-}
-    `,
-  { fragmentName: 'Colour' },
-) as unknown as TypedDocumentString<ColourFragment, unknown>;
 export const UrlFragmentDoc = new TypedDocumentString(
   `
     fragment Url on Url {
@@ -6156,22 +6187,6 @@ export const ImageWithTextFragmentDoc = new TypedDocumentString(
     `,
   { fragmentName: 'ImageWithText' },
 ) as unknown as TypedDocumentString<ImageWithTextFragment, unknown>;
-export const LinkFragmentDoc = new TypedDocumentString(
-  `
-    fragment Link on Link {
-  externalName
-  openInNewWindow
-  follow
-  url {
-    ...Url
-  }
-}
-    fragment Url on Url {
-  externalName
-  value
-}`,
-  { fragmentName: 'Link' },
-) as unknown as TypedDocumentString<LinkFragment, unknown>;
 export const MetadataFragmentDoc = new TypedDocumentString(
   `
     fragment Metadata on Metadata {
@@ -6210,6 +6225,84 @@ export const MultiColumnContentFragmentDoc = new TypedDocumentString(
     `,
   { fragmentName: 'MultiColumnContent' },
 ) as unknown as TypedDocumentString<MultiColumnContentFragment, unknown>;
+export const LinkFragmentDoc = new TypedDocumentString(
+  `
+    fragment Link on Link {
+  externalName
+  openInNewWindow
+  follow
+  url {
+    ...Url
+  }
+}
+    fragment Url on Url {
+  externalName
+  value
+}`,
+  { fragmentName: 'Link' },
+) as unknown as TypedDocumentString<LinkFragment, unknown>;
+export const ColourFragmentDoc = new TypedDocumentString(
+  `
+    fragment Colour on Color {
+  externalName
+  value
+}
+    `,
+  { fragmentName: 'Colour' },
+) as unknown as TypedDocumentString<ColourFragment, unknown>;
+export const NavigationItemFragmentDoc = new TypedDocumentString(
+  `
+    fragment NavigationItem on NavigationItem {
+  externalName
+  mainLink {
+    ...Link
+  }
+  contentCollection {
+    items {
+      __typename
+      ... on Link {
+        ...Link
+      }
+      ... on Media {
+        externalName
+        mediaDesktop {
+          url(transform: {width: 720})
+        }
+        mediaMobile {
+          url(transform: {width: 360})
+        }
+        altText
+      }
+      ... on NavigationItem {
+        externalName
+        mainLink {
+          ...Link
+        }
+      }
+    }
+  }
+  colour {
+    ...Colour
+  }
+}
+    fragment Colour on Color {
+  externalName
+  value
+}
+fragment Link on Link {
+  externalName
+  openInNewWindow
+  follow
+  url {
+    ...Url
+  }
+}
+fragment Url on Url {
+  externalName
+  value
+}`,
+  { fragmentName: 'NavigationItem' },
+) as unknown as TypedDocumentString<NavigationItemFragment, unknown>;
 export const GetFooterDocument = new TypedDocumentString(`
     query getFooter {
   footer(id: "PDtyHk4KiFOlReQj3sAFu") {
@@ -6235,37 +6328,7 @@ export const GetFooterDocument = new TypedDocumentString(`
       externalName
       navigationItemsCollection(limit: 10) {
         items {
-          externalName
-          mainLink {
-            ...Link
-          }
-          contentCollection {
-            items {
-              __typename
-              ... on Link {
-                ...Link
-              }
-              ... on Media {
-                externalName
-                mediaDesktop {
-                  url(transform: {width: 720})
-                }
-                mediaMobile {
-                  url(transform: {width: 360})
-                }
-                altText
-              }
-              ... on NavigationItem {
-                externalName
-                mainLink {
-                  ...Link
-                }
-              }
-            }
-          }
-          colour {
-            ...Colour
-          }
+          ...NavigationItem
         }
       }
       navColour {
@@ -6284,6 +6347,39 @@ fragment Link on Link {
   follow
   url {
     ...Url
+  }
+}
+fragment NavigationItem on NavigationItem {
+  externalName
+  mainLink {
+    ...Link
+  }
+  contentCollection {
+    items {
+      __typename
+      ... on Link {
+        ...Link
+      }
+      ... on Media {
+        externalName
+        mediaDesktop {
+          url(transform: {width: 720})
+        }
+        mediaMobile {
+          url(transform: {width: 360})
+        }
+        altText
+      }
+      ... on NavigationItem {
+        externalName
+        mainLink {
+          ...Link
+        }
+      }
+    }
+  }
+  colour {
+    ...Colour
   }
 }
 fragment Url on Url {

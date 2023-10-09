@@ -22,37 +22,7 @@ query getFooter {
       externalName
       navigationItemsCollection(limit: 10) {
         items {
-          externalName
-          mainLink {
-            ...Link
-          }
-          contentCollection {
-            items {
-              __typename
-              ... on Link {
-                ...Link
-              }
-              ... on Media {
-                externalName
-                mediaDesktop {
-                  url(transform: { width: 720 })
-                }
-                mediaMobile {
-                  url(transform: { width: 360 })
-                }
-                altText
-              }
-              ... on NavigationItem {
-                externalName
-                mainLink {
-                  ...Link
-                }
-              }
-            }
-          }
-          colour {
-            ...Colour
-          }
+          ...NavigationItem
         }
       }
       navColour {

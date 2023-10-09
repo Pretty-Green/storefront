@@ -25,16 +25,22 @@ export default async function Footer() {
             <Separator />
             <div className="flex justify-between">
               <nav className="flex gap-5">
-                {footer.desktopNavigation?.navigationItemsCollection?.items.map((navigation) => {
-                  return <FooterMenu key={navigation?.externalName} item={navigation} />;
-                })}
+                {footer.desktopNavigation?.navigationItemsCollection?.items.map(
+                  (navigationItem) => {
+                    if (navigationItem) {
+                      return (
+                        <FooterMenu key={navigationItem?.externalName} item={navigationItem} />
+                      );
+                    }
+                  },
+                )}
               </nav>
               <nav className="flex items-start gap-3">
                 {footer.socialLinksCollection?.items.map((social, i) => {
-                  if (social?.mediaDesktop?.url && social?.link?.url?.url) {
+                  if (social?.mediaDesktop?.url && social?.link?.url?.value) {
                     return (
                       <Link
-                        href={social?.link?.url?.url}
+                        href={social?.link?.url?.value}
                         key={i}
                         className="transition-opacity hover:opacity-60"
                       >

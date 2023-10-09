@@ -1,3 +1,4 @@
+import { Document } from '@contentful/rich-text-types';
 import Carousel from 'components/contentful/carousel';
 import Hero from 'components/contentful/hero';
 import { getPageByPath } from 'lib/contentful';
@@ -40,8 +41,9 @@ export default async function HomePage() {
   if (isHero) {
     const heroImg = homepageItems.hero?.media?.mediaDesktop?.url || '';
     const { img, base64 } = await getImage(heroImg);
+
     HeroComponent = (
-      <Hero src={img.src} button={{ text: 'Shop now', url: 'https://www.example.com' }}>
+      <Hero button={{ text: 'Shop now', url: 'https://www.example.com' }}>
         <Image
           className="object-cover"
           fill
@@ -84,7 +86,7 @@ export default async function HomePage() {
         const { img, base64 } = await getImage(src);
         return (
           <div key={index} className="mx-auto flex max-w-screen-2xl">
-            <div className="basis-1/2">{documentToReactComponent(text)}</div>
+            <div className="basis-1/2">{documentToReactComponent(text as Document)}</div>
             <div className="basis-1/2">
               <Image
                 className="object-cover"
