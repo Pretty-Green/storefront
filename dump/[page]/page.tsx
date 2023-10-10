@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 
-import Prose from 'components/prose';
 import { getPage } from 'lib/saleor';
 import { notFound } from 'next/navigation';
 
@@ -29,13 +28,13 @@ export async function generateMetadata({
 }
 
 export default async function Page({ params }: { params: { page: string } }) {
-  const page = await getPage(params.page);
+  // const product = await getProduct(params.handle);
 
-  if (!page) return notFound();
+  // if (!page) return notFound();
 
   return (
     <>
-      <h1 className="font-bold mb-8 text-5xl">{page.title}</h1>
+      {/* <h1 className="font-bold mb-8 text-5xl">{page.title}</h1>
       <Prose className="mb-8" html={page.body as string} />
       <p className="text-sm italic">
         {`This document was last updated on ${new Intl.DateTimeFormat(undefined, {
@@ -43,7 +42,7 @@ export default async function Page({ params }: { params: { page: string } }) {
           month: 'long',
           day: 'numeric',
         }).format(new Date(page.updatedAt))}.`}
-      </p>
+      </p> */}
     </>
   );
 }

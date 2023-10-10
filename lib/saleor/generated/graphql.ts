@@ -30207,6 +30207,12 @@ export type CheckoutFragment = {
           __typename?: 'ProductVariant';
           id: string;
           name: string;
+          media?: Array<{
+            __typename?: 'ProductMedia';
+            url: string;
+            type: ProductMediaType;
+            alt: string;
+          }> | null;
           attributes: Array<{
             __typename?: 'SelectedAttribute';
             attribute: {
@@ -30232,6 +30238,12 @@ export type CheckoutFragment = {
           } | null;
         }> | null;
       };
+      media?: Array<{
+        __typename?: 'ProductMedia';
+        url: string;
+        type: ProductMediaType;
+        alt: string;
+      }> | null;
       attributes: Array<{
         __typename?: 'SelectedAttribute';
         attribute: {
@@ -30304,6 +30316,73 @@ export type FeaturedProductFragment = {
   }> | null;
 };
 
+export type ProductFragment = {
+  __typename?: 'Product';
+  id: string;
+  slug: string;
+  name: string;
+  isAvailableForPurchase?: boolean | null;
+  description?: string | null;
+  seoTitle?: string | null;
+  seoDescription?: string | null;
+  updatedAt: string;
+  pricing?: {
+    __typename?: 'ProductPricingInfo';
+    priceRange?: {
+      __typename?: 'TaxedMoneyRange';
+      start?: {
+        __typename?: 'TaxedMoney';
+        gross: { __typename?: 'Money'; currency: string; amount: number };
+      } | null;
+      stop?: {
+        __typename?: 'TaxedMoney';
+        gross: { __typename?: 'Money'; currency: string; amount: number };
+      } | null;
+    } | null;
+  } | null;
+  media?: Array<{
+    __typename?: 'ProductMedia';
+    url: string;
+    type: ProductMediaType;
+    alt: string;
+  }> | null;
+  collections?: Array<{ __typename?: 'Collection'; name: string }> | null;
+  variants?: Array<{
+    __typename?: 'ProductVariant';
+    id: string;
+    name: string;
+    media?: Array<{
+      __typename?: 'ProductMedia';
+      url: string;
+      type: ProductMediaType;
+      alt: string;
+    }> | null;
+    attributes: Array<{
+      __typename?: 'SelectedAttribute';
+      attribute: {
+        __typename?: 'Attribute';
+        slug?: string | null;
+        name?: string | null;
+        choices?: {
+          __typename?: 'AttributeValueCountableConnection';
+          edges: Array<{
+            __typename?: 'AttributeValueCountableEdge';
+            node: { __typename?: 'AttributeValue'; name?: string | null };
+          }>;
+        } | null;
+      };
+      values: Array<{ __typename?: 'AttributeValue'; name?: string | null }>;
+    }>;
+    pricing?: {
+      __typename?: 'VariantPricingInfo';
+      price?: {
+        __typename?: 'TaxedMoney';
+        gross: { __typename?: 'Money'; currency: string; amount: number };
+      } | null;
+    } | null;
+  }> | null;
+};
+
 export type ProductDetailsFragment = {
   __typename?: 'Product';
   id: string;
@@ -30339,6 +30418,12 @@ export type ProductDetailsFragment = {
     __typename?: 'ProductVariant';
     id: string;
     name: string;
+    media?: Array<{
+      __typename?: 'ProductMedia';
+      url: string;
+      type: ProductMediaType;
+      alt: string;
+    }> | null;
     attributes: Array<{
       __typename?: 'SelectedAttribute';
       attribute: {
@@ -30369,6 +30454,12 @@ export type VariantFragment = {
   __typename?: 'ProductVariant';
   id: string;
   name: string;
+  media?: Array<{
+    __typename?: 'ProductMedia';
+    url: string;
+    type: ProductMediaType;
+    alt: string;
+  }> | null;
   attributes: Array<{
     __typename?: 'SelectedAttribute';
     attribute: {
@@ -30465,6 +30556,12 @@ export type CheckoutAddLineMutation = {
               __typename?: 'ProductVariant';
               id: string;
               name: string;
+              media?: Array<{
+                __typename?: 'ProductMedia';
+                url: string;
+                type: ProductMediaType;
+                alt: string;
+              }> | null;
               attributes: Array<{
                 __typename?: 'SelectedAttribute';
                 attribute: {
@@ -30490,6 +30587,12 @@ export type CheckoutAddLineMutation = {
               } | null;
             }> | null;
           };
+          media?: Array<{
+            __typename?: 'ProductMedia';
+            url: string;
+            type: ProductMediaType;
+            alt: string;
+          }> | null;
           attributes: Array<{
             __typename?: 'SelectedAttribute';
             attribute: {
@@ -30590,6 +30693,12 @@ export type CheckoutDeleteLineMutation = {
               __typename?: 'ProductVariant';
               id: string;
               name: string;
+              media?: Array<{
+                __typename?: 'ProductMedia';
+                url: string;
+                type: ProductMediaType;
+                alt: string;
+              }> | null;
               attributes: Array<{
                 __typename?: 'SelectedAttribute';
                 attribute: {
@@ -30615,6 +30724,12 @@ export type CheckoutDeleteLineMutation = {
               } | null;
             }> | null;
           };
+          media?: Array<{
+            __typename?: 'ProductMedia';
+            url: string;
+            type: ProductMediaType;
+            alt: string;
+          }> | null;
           attributes: Array<{
             __typename?: 'SelectedAttribute';
             attribute: {
@@ -30715,6 +30830,12 @@ export type CheckoutUpdateLineMutation = {
               __typename?: 'ProductVariant';
               id: string;
               name: string;
+              media?: Array<{
+                __typename?: 'ProductMedia';
+                url: string;
+                type: ProductMediaType;
+                alt: string;
+              }> | null;
               attributes: Array<{
                 __typename?: 'SelectedAttribute';
                 attribute: {
@@ -30740,6 +30861,12 @@ export type CheckoutUpdateLineMutation = {
               } | null;
             }> | null;
           };
+          media?: Array<{
+            __typename?: 'ProductMedia';
+            url: string;
+            type: ProductMediaType;
+            alt: string;
+          }> | null;
           attributes: Array<{
             __typename?: 'SelectedAttribute';
             attribute: {
@@ -30839,6 +30966,12 @@ export type CreateCheckoutMutation = {
               __typename?: 'ProductVariant';
               id: string;
               name: string;
+              media?: Array<{
+                __typename?: 'ProductMedia';
+                url: string;
+                type: ProductMediaType;
+                alt: string;
+              }> | null;
               attributes: Array<{
                 __typename?: 'SelectedAttribute';
                 attribute: {
@@ -30864,6 +30997,12 @@ export type CreateCheckoutMutation = {
               } | null;
             }> | null;
           };
+          media?: Array<{
+            __typename?: 'ProductMedia';
+            url: string;
+            type: ProductMediaType;
+            alt: string;
+          }> | null;
           attributes: Array<{
             __typename?: 'SelectedAttribute';
             attribute: {
@@ -30890,6 +31029,27 @@ export type CreateCheckoutMutation = {
         };
       }>;
     } | null;
+  } | null;
+};
+
+export type GetCategoriesQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetCategoriesQuery = {
+  __typename?: 'Query';
+  categories?: {
+    __typename?: 'CategoryCountableConnection';
+    edges: Array<{
+      __typename?: 'CategoryCountableEdge';
+      node: {
+        __typename?: 'Category';
+        id: string;
+        name: string;
+        slug: string;
+        description?: string | null;
+        seoTitle?: string | null;
+        seoDescription?: string | null;
+      };
+    }>;
   } | null;
 };
 
@@ -30927,6 +31087,7 @@ export type GetCategoryProductsBySlugQuery = {
   __typename?: 'Query';
   category?: {
     __typename?: 'Category';
+    name: string;
     products?: {
       __typename?: 'ProductCountableConnection';
       edges: Array<{
@@ -30966,6 +31127,12 @@ export type GetCategoryProductsBySlugQuery = {
             __typename?: 'ProductVariant';
             id: string;
             name: string;
+            media?: Array<{
+              __typename?: 'ProductMedia';
+              url: string;
+              type: ProductMediaType;
+              alt: string;
+            }> | null;
             attributes: Array<{
               __typename?: 'SelectedAttribute';
               attribute: {
@@ -31058,6 +31225,12 @@ export type GetCheckoutByIdQuery = {
             __typename?: 'ProductVariant';
             id: string;
             name: string;
+            media?: Array<{
+              __typename?: 'ProductMedia';
+              url: string;
+              type: ProductMediaType;
+              alt: string;
+            }> | null;
             attributes: Array<{
               __typename?: 'SelectedAttribute';
               attribute: {
@@ -31083,6 +31256,12 @@ export type GetCheckoutByIdQuery = {
             } | null;
           }> | null;
         };
+        media?: Array<{
+          __typename?: 'ProductMedia';
+          url: string;
+          type: ProductMediaType;
+          alt: string;
+        }> | null;
         attributes: Array<{
           __typename?: 'SelectedAttribute';
           attribute: {
@@ -31184,6 +31363,12 @@ export type GetCollectionProductsBySlugQuery = {
             __typename?: 'ProductVariant';
             id: string;
             name: string;
+            media?: Array<{
+              __typename?: 'ProductMedia';
+              url: string;
+              type: ProductMediaType;
+              alt: string;
+            }> | null;
             attributes: Array<{
               __typename?: 'SelectedAttribute';
               attribute: {
@@ -31499,6 +31684,12 @@ export type GetProductBySlugQuery = {
       __typename?: 'ProductVariant';
       id: string;
       name: string;
+      media?: Array<{
+        __typename?: 'ProductMedia';
+        url: string;
+        type: ProductMediaType;
+        alt: string;
+      }> | null;
       attributes: Array<{
         __typename?: 'SelectedAttribute';
         attribute: {
@@ -31608,6 +31799,12 @@ export type SearchProductsQuery = {
           __typename?: 'ProductVariant';
           id: string;
           name: string;
+          media?: Array<{
+            __typename?: 'ProductMedia';
+            url: string;
+            type: ProductMediaType;
+            alt: string;
+          }> | null;
           attributes: Array<{
             __typename?: 'SelectedAttribute';
             attribute: {
@@ -31871,6 +32068,11 @@ export const VariantFragmentDoc = new TypedDocumentString(
     fragment Variant on ProductVariant {
   id
   name
+  media {
+    url(size: 360)
+    type
+    alt
+  }
   attributes {
     attribute {
       slug
@@ -31941,6 +32143,11 @@ export const ProductDetailsFragmentDoc = new TypedDocumentString(
     fragment Variant on ProductVariant {
   id
   name
+  media {
+    url(size: 360)
+    type
+    alt
+  }
   attributes {
     attribute {
       slug
@@ -32040,6 +32247,11 @@ export const CheckoutFragmentDoc = new TypedDocumentString(
 fragment Variant on ProductVariant {
   id
   name
+  media {
+    url(size: 360)
+    type
+    alt
+  }
   attributes {
     attribute {
       slug
@@ -32118,6 +32330,80 @@ export const FeaturedProductFragmentDoc = new TypedDocumentString(
     `,
   { fragmentName: 'FeaturedProduct' },
 ) as unknown as TypedDocumentString<FeaturedProductFragment, unknown>;
+export const ProductFragmentDoc = new TypedDocumentString(
+  `
+    fragment Product on Product {
+  id
+  slug
+  name
+  isAvailableForPurchase
+  description
+  seoTitle
+  seoDescription
+  pricing {
+    priceRange {
+      start {
+        gross {
+          currency
+          amount
+        }
+      }
+      stop {
+        gross {
+          currency
+          amount
+        }
+      }
+    }
+  }
+  media {
+    url(size: 1080)
+    type
+    alt
+  }
+  collections {
+    name
+  }
+  updatedAt
+  variants {
+    ...Variant
+  }
+}
+    fragment Variant on ProductVariant {
+  id
+  name
+  media {
+    url(size: 360)
+    type
+    alt
+  }
+  attributes {
+    attribute {
+      slug
+      name
+      choices(first: 100) {
+        edges {
+          node {
+            name
+          }
+        }
+      }
+    }
+    values {
+      name
+    }
+  }
+  pricing {
+    price {
+      gross {
+        currency
+        amount
+      }
+    }
+  }
+}`,
+  { fragmentName: 'Product' },
+) as unknown as TypedDocumentString<ProductFragment, unknown>;
 export const MenuItemFragmentDoc = new TypedDocumentString(
   `
     fragment MenuItem on MenuItem {
@@ -32226,6 +32512,11 @@ fragment ProductDetails on Product {
 fragment Variant on ProductVariant {
   id
   name
+  media {
+    url(size: 360)
+    type
+    alt
+  }
   attributes {
     attribute {
       slug
@@ -32334,6 +32625,11 @@ fragment ProductDetails on Product {
 fragment Variant on ProductVariant {
   id
   name
+  media {
+    url(size: 360)
+    type
+    alt
+  }
   attributes {
     attribute {
       slug
@@ -32445,6 +32741,11 @@ fragment ProductDetails on Product {
 fragment Variant on ProductVariant {
   id
   name
+  media {
+    url(size: 360)
+    type
+    alt
+  }
   attributes {
     attribute {
       slug
@@ -32556,6 +32857,11 @@ fragment ProductDetails on Product {
 fragment Variant on ProductVariant {
   id
   name
+  media {
+    url(size: 360)
+    type
+    alt
+  }
   attributes {
     attribute {
       slug
@@ -32581,6 +32887,22 @@ fragment Variant on ProductVariant {
     }
   }
 }`) as unknown as TypedDocumentString<CreateCheckoutMutation, CreateCheckoutMutationVariables>;
+export const GetCategoriesDocument = new TypedDocumentString(`
+    query GetCategories {
+  categories(first: 100) {
+    edges {
+      node {
+        id
+        name
+        slug
+        description
+        seoTitle
+        seoDescription
+      }
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<GetCategoriesQuery, GetCategoriesQueryVariables>;
 export const GetCategoryBySlugDocument = new TypedDocumentString(`
     query GetCategoryBySlug($slug: String!) {
   category(slug: $slug) {
@@ -32607,6 +32929,7 @@ export const GetCategoryBySlugDocument = new TypedDocumentString(`
 export const GetCategoryProductsBySlugDocument = new TypedDocumentString(`
     query GetCategoryProductsBySlug($slug: String!, $sortBy: ProductOrderField!, $sortDirection: OrderDirection!) {
   category(slug: $slug) {
+    name
     products(
       channel: "default-channel"
       first: 100
@@ -32614,49 +32937,57 @@ export const GetCategoryProductsBySlugDocument = new TypedDocumentString(`
     ) {
       edges {
         node {
-          id
-          slug
-          name
-          isAvailableForPurchase
-          description
-          seoTitle
-          seoDescription
-          pricing {
-            priceRange {
-              start {
-                gross {
-                  currency
-                  amount
-                }
-              }
-              stop {
-                gross {
-                  currency
-                  amount
-                }
-              }
-            }
-          }
-          media {
-            url(size: 2160)
-            type
-            alt
-          }
-          collections {
-            name
-          }
-          updatedAt
-          variants {
-            ...Variant
-          }
+          ...Product
         }
       }
     }
   }
 }
-    fragment Variant on ProductVariant {
+    fragment Product on Product {
+  id
+  slug
+  name
+  isAvailableForPurchase
+  description
+  seoTitle
+  seoDescription
+  pricing {
+    priceRange {
+      start {
+        gross {
+          currency
+          amount
+        }
+      }
+      stop {
+        gross {
+          currency
+          amount
+        }
+      }
+    }
+  }
+  media {
+    url(size: 1080)
+    type
+    alt
+  }
+  collections {
+    name
+  }
+  updatedAt
+  variants {
+    ...Variant
+  }
+}
+fragment Variant on ProductVariant {
   id
   name
+  media {
+    url(size: 360)
+    type
+    alt
+  }
   attributes {
     attribute {
       slug
@@ -32761,6 +33092,11 @@ fragment ProductDetails on Product {
 fragment Variant on ProductVariant {
   id
   name
+  media {
+    url(size: 360)
+    type
+    alt
+  }
   attributes {
     attribute {
       slug
@@ -32857,6 +33193,11 @@ export const GetCollectionProductsBySlugDocument = new TypedDocumentString(`
     fragment Variant on ProductVariant {
   id
   name
+  media {
+    url(size: 360)
+    type
+    alt
+  }
   attributes {
     attribute {
       slug
@@ -33080,6 +33421,11 @@ export const GetProductBySlugDocument = new TypedDocumentString(`
 fragment Variant on ProductVariant {
   id
   name
+  media {
+    url(size: 360)
+    type
+    alt
+  }
   attributes {
     attribute {
       slug
@@ -33192,6 +33538,11 @@ export const SearchProductsDocument = new TypedDocumentString(`
     fragment Variant on ProductVariant {
   id
   name
+  media {
+    url(size: 360)
+    type
+    alt
+  }
   attributes {
     attribute {
       slug

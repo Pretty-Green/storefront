@@ -8,6 +8,7 @@ import {
   CheckoutDeleteLineDocument,
   CheckoutUpdateLineDocument,
   CreateCheckoutDocument,
+  GetCategoriesDocument,
   GetCategoryBySlugDocument,
   GetCategoryProductsBySlugDocument,
   GetCheckoutByIdDocument,
@@ -259,23 +260,17 @@ export async function getCollectionProducts({
   collection: string;
   reverse?: boolean;
   sortKey?: ProductOrderField;
-}): Promise<Product[]> {
+}) {
   if (typeof reverse === 'undefined' && typeof sortKey === 'undefined') {
     reverse = true;
     sortKey = ProductOrderField.Name;
   }
 
-  const saleorCollectionProducts =
-    (await _getCollectionProducts({
-      collection,
-      reverse,
-      sortKey,
-    })) ||
-    (await _getCategoryProducts({
-      category: collection,
-      reverse,
-      sortKey,
-    }));
+  const saleorCollectionProducts = await _getCollectionProducts({
+    collection,
+    reverse,
+    sortKey,
+  });
 
   if (!saleorCollectionProducts) {
     throw new Error(`Collection not found: ${collection}`);
@@ -549,4 +544,67 @@ export async function revalidate(req: NextRequest): Promise<Response> {
   }
   console.log('Done revalidating');
   return NextResponse.json({ status: 204 });
+}
+
+export async function getCategories() {
+  const saleorCategories = await saleorFetch({
+    query: GetCategoriesDocument,
+    variables: {},
+    tags: [TAGS.categories],
+  });
+
+  if (!saleorCategories.categories) {
+    throw new Error(`Categories not found`);
+  }
+
+  if (!saleorCategories.categories.edges) {
+    throw new Error(`Categories Edges not found`);
+  }
+
+  if (saleorCategories.categories.edges.length === 0) {
+    throw new Error(`Categories Edges are empty`);
+  }
+
+  return saleorCategories.categories.edges.map((edge) => {
+    return {
+      slug: edge.node.slug,
+      name: edge.node.name,
+      description: edge.node.description as string,
+      seo: {
+        title: edge.node.seoTitle || edge.node.name,
+        description: edge.node.seoDescription || '',
+      },
+    };
+  });
+}
+
+export async function getCategoryProducts({
+  category,
+  reverse,
+  sortKey,
+}: {
+  category: string;
+  reverse?: boolean;
+  sortKey?: ProductOrderField;
+}) {
+  if (typeof reverse === 'undefined' && typeof sortKey === 'undefined') {
+    reverse = true;
+    sortKey = ProductOrderField.Name;
+  }
+
+  const saleorCategoryProducts = await _getCategoryProducts({
+    category,
+    reverse,
+    sortKey,
+  });
+
+  if (!saleorCategoryProducts) {
+    throw new Error(`Category not found: ${category}`);
+  }
+
+  if (!saleorCategoryProducts.products) {
+    throw new Error(`Category edges not found: ${category}`);
+  }
+
+  return saleorCategoryProducts;
 }

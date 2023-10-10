@@ -1,6 +1,11 @@
 fragment Variant on ProductVariant {
   id
   name
+  media {
+    url(size: 360)
+    type
+    alt
+  }
   attributes {
     attribute {
       slug

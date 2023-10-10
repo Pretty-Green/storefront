@@ -1,23 +1,24 @@
 import Grid from 'components/grid';
 import { GridTileImage } from 'components/grid/tile';
-import { Product } from 'lib/types';
+import { ProductFragment } from 'lib/saleor/generated/graphql';
 import Link from 'next/link';
 
-export default function ProductGridItems({ products }: { products: Product[] }) {
+export default function ProductGridItems({ products }: { products: { node: ProductFragment }[] }) {
+  const veriants = products.flatMap((product) => product.node.variants);
+
   return (
     <>
-      {products.map((product) => (
-        <Grid.Item key={product.handle} className="animate-fadeIn">
-          <Link className="relative inline-block h-full w-full" href={`/product/${product.handle}`}>
+      {veriants.map((variant) => (
+        <Grid.Item key={variant?.id} className="animate-fadeIn">
+          <Link className="inline-block h-full w-full" href={`/product/`}>
             <GridTileImage
-              alt={product.title}
+              alt={variant?.name || ''}
               label={{
-                title: product.title,
-                amount: product.priceRange.minVariantPrice.amount,
-                currencyCode: product.priceRange.minVariantPrice.currencyCode,
+                title: String(variant?.name),
+                amount: String(variant?.pricing?.price?.gross.amount),
+                currencyCode: String(variant?.pricing?.price?.gross.currency),
               }}
-              src={product.featuredImage?.url}
-              fill
+              src={variant?.media?.[0]?.url || ''}
               sizes="(min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw"
             />
           </Link>
