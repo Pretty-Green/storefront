@@ -31717,6 +31717,19 @@ export type GetProductBySlugQuery = {
   } | null;
 };
 
+export type GetProductsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetProductsQuery = {
+  __typename?: 'Query';
+  products?: {
+    __typename?: 'ProductCountableConnection';
+    edges: Array<{
+      __typename?: 'ProductCountableEdge';
+      node: { __typename?: 'Product'; slug: string };
+    }>;
+  } | null;
+};
+
 export type GetVariantsBySkusQueryVariables = Exact<{
   skus?: InputMaybe<Array<Scalars['String']['input']> | Scalars['String']['input']>;
 }>;
@@ -31834,9 +31847,9 @@ export type SearchProductsQuery = {
   } | null;
 };
 
-export type GetProductsQueryVariables = Exact<{ [key: string]: never }>;
+export type GetTestProductsQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetProductsQuery = {
+export type GetTestProductsQuery = {
   __typename?: 'Query';
   products?: {
     __typename?: 'ProductCountableConnection';
@@ -33451,6 +33464,17 @@ fragment Variant on ProductVariant {
     }
   }
 }`) as unknown as TypedDocumentString<GetProductBySlugQuery, GetProductBySlugQueryVariables>;
+export const GetProductsDocument = new TypedDocumentString(`
+    query GetProducts {
+  products(channel: "default-channel", first: 100) {
+    edges {
+      node {
+        slug
+      }
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<GetProductsQuery, GetProductsQueryVariables>;
 export const GetVariantsBySkusDocument = new TypedDocumentString(`
     query GetVariantsBySkus($skus: [String!]) {
   productVariants(first: 10, channel: "default-channel", filter: {sku: $skus}) {
@@ -33568,8 +33592,8 @@ export const SearchProductsDocument = new TypedDocumentString(`
     }
   }
 }`) as unknown as TypedDocumentString<SearchProductsQuery, SearchProductsQueryVariables>;
-export const GetProductsDocument = new TypedDocumentString(`
-    query GetProducts {
+export const GetTestProductsDocument = new TypedDocumentString(`
+    query GetTestProducts {
   products(first: 10, channel: "default-channel") {
     edges {
       node {
@@ -33578,7 +33602,7 @@ export const GetProductsDocument = new TypedDocumentString(`
     }
   }
 }
-    `) as unknown as TypedDocumentString<GetProductsQuery, GetProductsQueryVariables>;
+    `) as unknown as TypedDocumentString<GetTestProductsQuery, GetTestProductsQueryVariables>;
 export const WebhookSubscriptionDocument = new TypedDocumentString(`
     subscription WebhookSubscription {
   event {

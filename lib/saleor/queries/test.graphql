@@ -1,4 +1,4 @@
-query GetProducts {
+query GetTestProducts {
   products(first: 10, channel: "default-channel") {
     edges {
       node {

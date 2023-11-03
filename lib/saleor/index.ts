@@ -19,6 +19,7 @@ import {
   GetPageBySlugDocument,
   GetPagesDocument,
   GetProductBySlugDocument,
+  GetProductsDocument,
   GetVariantsBySkusDocument,
   MenuItemFragment,
   OrderDirection,
@@ -80,7 +81,6 @@ export async function getCollections(): Promise<Collection[]> {
   const saleorCollections = await saleorFetch({
     query: GetCollectionsDocument,
     variables: {},
-    tags: [TAGS.collections],
   });
 
   return (
@@ -129,7 +129,7 @@ export async function getPage(handle: string): Promise<Page> {
   };
 }
 
-export async function getProduct(handle: string): Promise<Product | undefined> {
+export async function getProduct(handle: string) {
   const saleorProduct = await saleorFetch({
     query: GetProductBySlugDocument,
     variables: {
@@ -142,7 +142,7 @@ export async function getProduct(handle: string): Promise<Product | undefined> {
     throw new Error(`Product not found: ${handle}`);
   }
 
-  return saleorProductToVercelProduct(saleorProduct.product);
+  return saleorProduct.product;
 }
 
 export async function GetVariantsBySkus(handle: string[]) {
@@ -310,7 +310,7 @@ export async function getMenu(handle: string): Promise<Menu[]> {
     )
     .map((item) => ({
       ...item,
-      path: item.path.replace('http://localhost:8000', saleorUrl.toString().slice(0, -1)),
+      path: item.path.replace('http://127.0.0.1:8000', saleorUrl.toString().slice(0, -1)),
     }));
 
   if (handle === 'next-js-frontend-header-menu') {
@@ -357,7 +357,7 @@ function flattenMenuItems(menuItems: null | undefined | MenuItemWithChildren[]):
   );
 }
 
-export async function getProducts({
+export async function getSearchProducts({
   query,
   reverse,
   sortKey,
@@ -607,4 +607,21 @@ export async function getCategoryProducts({
   }
 
   return saleorCategoryProducts;
+}
+
+export async function getProducts() {
+  const saleorProducts = await saleorFetch({
+    query: GetProductsDocument,
+    variables: {},
+  });
+
+  if (!saleorProducts.products) {
+    throw new Error(`Products not found - something wront with api`);
+  }
+
+  if (saleorProducts?.products?.edges?.length === 0) {
+    throw new Error(`Products not found`);
+  }
+
+  return saleorProducts.products.edges;
 }

@@ -1,4 +1,4 @@
-import { getCollections, getPages, getProducts } from 'lib/saleor';
+import { getCollections, getPages, getSearchProducts } from 'lib/saleor';
 import { MetadataRoute } from 'next';
 
 type Route = {
@@ -8,7 +8,7 @@ type Route = {
 
 const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL
   ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
-  : 'http://localhost:3000';
+  : 'http://127.0.0.1:3000';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const routesMap = [''].map((route) => ({
@@ -23,7 +23,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })),
   );
 
-  const productsPromise = getProducts({}).then((products) =>
+  const productsPromise = getSearchProducts({}).then((products) =>
     products.map((product) => ({
       url: `${baseUrl}/product/${product.handle}`,
       lastModified: product.updatedAt,
